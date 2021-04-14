@@ -12,18 +12,21 @@ class SearchViewController: UIViewController {
     private var imageArray = [ImageInfo]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
+        view.backgroundColor = .bgColour
+        
         setupNavbar()
-        loadImages(query: "food, corn")
+        setupSearchController()
     }
     
-    private func loadImages (query: String) {
+    private func findImages(query: String) {
         
         NetworkService.shared.fetchImages(query: query, amount: 10) { (result) in
             switch result {
             case let .failure(error):
-                let alerController = UIAlertController(title: "Error", message: "This is not that helpful, but something went wrong.", preferredStyle: .alert)
+                let alerController = UIAlertController(title: "Error", message: "Detailed error messages are not implemented", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .destructive) { _ in }
                 alerController.addAction(okAction)
                 self.present(alerController, animated: true, completion: nil)
@@ -35,8 +38,28 @@ class SearchViewController: UIViewController {
         }
     }
     
+    private func setupSearchController() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Enter keywords to find images"
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
+    }
+    
     private func setupNavbar() {
-        
-        navigationItem.title = "Pixabay Image Search"
+        navigationItem.title = "Search"        
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        return true
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text else {
+            return
+        }
+        findImages(query: query)
     }
 }

@@ -18,6 +18,7 @@
 		C946F6E026263A220085C5DC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F6DF26263A220085C5DC /* NetworkError.swift */; };
 		C946F6E326263A610085C5DC /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F6E226263A610085C5DC /* SearchResults.swift */; };
 		C946F6E7262721BA0085C5DC /* PixabaySearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F6E6262721BA0085C5DC /* PixabaySearchNavigationController.swift */; };
+		C946F6F426276A860085C5DC /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F6F326276A860085C5DC /* Colours.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		C946F6DF26263A220085C5DC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		C946F6E226263A610085C5DC /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		C946F6E6262721BA0085C5DC /* PixabaySearchNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabaySearchNavigationController.swift; sourceTree = "<group>"; };
+		C946F6F326276A860085C5DC /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 		C946F6B42625E3080085C5DC /* PixabaySearch */ = {
 			isa = PBXGroup;
 			children = (
+				C946F6F226276A730085C5DC /* Extensions */,
 				C946F6D8262604950085C5DC /* Delegates */,
 				C946F6D02625FE290085C5DC /* Model */,
 				C946F6DB262604F00085C5DC /* Services */,
@@ -120,6 +123,14 @@
 				C946F6E6262721BA0085C5DC /* PixabaySearchNavigationController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C946F6F226276A730085C5DC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C946F6F326276A860085C5DC /* Colours.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +210,7 @@
 				C946F6E026263A220085C5DC /* NetworkError.swift in Sources */,
 				C946F6E326263A610085C5DC /* SearchResults.swift in Sources */,
 				C946F6B82625E3080085C5DC /* SceneDelegate.swift in Sources */,
+				C946F6F426276A860085C5DC /* Colours.swift in Sources */,
 				C946F6D6262604620085C5DC /* NetworkProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
