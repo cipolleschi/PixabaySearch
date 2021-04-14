@@ -7,18 +7,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SearchViewController: UIViewController {
     
     private var imageArray = [ImageInfo]()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setupNavbar()
         loadImages(query: "food, corn")
     }
     
     private func loadImages (query: String) {
-
+        
         NetworkService.shared.fetchImages(query: query, amount: 10) { (result) in
             switch result {
             case let .failure(error):
@@ -33,5 +34,9 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    private func setupNavbar() {
+        
+        navigationItem.title = "Pixabay Image Search"
+    }
 }
-
