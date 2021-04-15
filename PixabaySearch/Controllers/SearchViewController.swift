@@ -10,15 +10,17 @@ import UIKit
 class SearchViewController: UIViewController {
     
     private var imageArray = [ImageInfo]()
+    private let searchView = SearchView()
+    
+    override func loadView() {
+        view = searchView
+        searchView.searchTappedHandler = handleButtonTap(_:)
+    }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        view.backgroundColor = .bgColour
-        
         setupNavbar()
-        setupSearchController()
     }
     
     private func findImages(query: String) {
@@ -38,28 +40,32 @@ class SearchViewController: UIViewController {
         }
     }
     
-    private func setupSearchController() {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "Enter keywords to find images"
-        searchController.searchBar.delegate = self
-        navigationItem.searchController = searchController
-    }
+//    private func setupSearchController() {
+//        let searchController = UISearchController(searchResultsController: nil)
+//        searchController.searchBar.placeholder = "Enter keywords to find images"
+//        searchController.searchBar.delegate = self
+//        navigationItem.searchController = searchController
+//    }
     
     private func setupNavbar() {
-        navigationItem.title = "Search"        
+        navigationItem.title = "Pixabay images"
+    }
+    
+    private func handleButtonTap(_ customView: SearchView) {
+        print("tap")
     }
 }
 
-extension SearchViewController: UISearchBarDelegate {
-    
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        return true
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        guard let query = searchBar.text else {
-            return
-        }
-        findImages(query: query)
-    }
-}
+//extension SearchViewController: UISearchBarDelegate {
+//
+//    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+//        return true
+//    }
+//
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        guard let query = searchBar.text else {
+//            return
+//        }
+//        findImages(query: query)
+//    }
+//}
