@@ -11,13 +11,13 @@ import Foundation
 struct ImageInfo: Decodable {
     
     let id: Int
-    let previewURL: URL?
+    let previewURL: URL
     let previewWidth: Int
     let previewHeight: Int
-    let webformatURL: URL?
+    let webformatURL: URL
     let webformatWidth: Int
     let webformatHeight: Int
-    let largeImageURL: URL?
+    let largeImageURL: URL
     let likes: Int
     let user_id: Int
     let user: String

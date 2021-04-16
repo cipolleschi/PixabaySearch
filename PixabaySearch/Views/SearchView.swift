@@ -42,7 +42,7 @@ class SearchView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         
         button.backgroundColor = UIColor.lightGray
-        button.setTitle("Tap me", for: UIControl.State.normal)
+        button.setTitle("Search Now", for: UIControl.State.normal)
         button.tintColor = UIColor.black
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
@@ -80,7 +80,6 @@ class SearchView: UIView {
             searchButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
             searchButton.heightAnchor.constraint(equalToConstant: 60)
         ])
-        
     }
     
     @objc func buttonAction(_ sender:UIButton!)
