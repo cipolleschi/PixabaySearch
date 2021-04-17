@@ -21,15 +21,21 @@ class SearchViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupNavbar()
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    private func setupNavbar() {
-        navigationItem.title = "Pixabay images"
-        navigationController?.navigationBar.prefersLargeTitles = true
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        updateNavbar()
     }
+    
+//    private func setupNavbar() {
+//        navigationItem.title = "Pixabay images"
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//    }
     
     private func updateNavbar() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
         let backButton = UIBarButtonItem()
         backButton.title = "Back"
         backButton.tintColor = .mainTextColour
@@ -46,7 +52,6 @@ class SearchViewController: UIViewController {
             let searchResultsVC = SearchResultsViewController()
             self.navigationController?.pushViewController(searchResultsVC, animated: true)
             searchResultsVC.searchString = searchString
-            self.updateNavbar()
         }
     }
 }

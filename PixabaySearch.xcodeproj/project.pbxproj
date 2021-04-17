@@ -22,6 +22,8 @@
 		C946F6F826277C820085C5DC /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F6F726277C820085C5DC /* SearchResultsViewController.swift */; };
 		C946F6FC26278C080085C5DC /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F6FB26278C080085C5DC /* SearchView.swift */; };
 		C946F728262A23A90085C5DC /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F727262A23A90085C5DC /* ImageCollectionCell.swift */; };
+		C946F72F262B3DA50085C5DC /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F72E262B3DA50085C5DC /* TextFieldWithPadding.swift */; };
+		C946F734262B40900085C5DC /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F733262B40900085C5DC /* UIConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		C946F6F726277C820085C5DC /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		C946F6FB26278C080085C5DC /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C946F727262A23A90085C5DC /* ImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionCell.swift; sourceTree = "<group>"; };
+		C946F72E262B3DA50085C5DC /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
+		C946F733262B40900085C5DC /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 		C946F6B42625E3080085C5DC /* PixabaySearch */ = {
 			isa = PBXGroup;
 			children = (
+				C946F732262B40780085C5DC /* Utils */,
+				C946F72D262B3D880085C5DC /* Classes */,
 				C946F6F226276A730085C5DC /* Extensions */,
 				C946F6D8262604950085C5DC /* Delegates */,
 				C946F6D02625FE290085C5DC /* Model */,
@@ -150,6 +156,22 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		C946F72D262B3D880085C5DC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C946F72E262B3DA50085C5DC /* TextFieldWithPadding.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		C946F732262B40780085C5DC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				C946F733262B40900085C5DC /* UIConstants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -222,6 +244,8 @@
 			files = (
 				C946F6BA2625E3080085C5DC /* SearchViewController.swift in Sources */,
 				C946F6D22625FE420085C5DC /* ImageInfo.swift in Sources */,
+				C946F72F262B3DA50085C5DC /* TextFieldWithPadding.swift in Sources */,
+				C946F734262B40900085C5DC /* UIConstants.swift in Sources */,
 				C946F6E7262721BA0085C5DC /* PixabaySearchNavigationController.swift in Sources */,
 				C946F728262A23A90085C5DC /* ImageCollectionCell.swift in Sources */,
 				C946F6B62625E3080085C5DC /* AppDelegate.swift in Sources */,

@@ -15,18 +15,12 @@ class SearchResultsViewController: UIViewController, UICollectionViewDelegate {
     private var numberOfItems = 0
     private let myCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
-        viewLayout.sectionInset = UIEdgeInsets(top: LayoutConstant.spacing, left: LayoutConstant.spacing, bottom: LayoutConstant.spacing, right: LayoutConstant.spacing)
-        viewLayout.itemSize = CGSize(width: LayoutConstant.itemWidth, height: LayoutConstant.itemHeight)
+        viewLayout.sectionInset = UIEdgeInsets(top: kUI.Spacing.medium, left: kUI.Spacing.medium, bottom: kUI.Spacing.medium, right: kUI.Spacing.medium)
+        viewLayout.itemSize = CGSize(width: kUI.ImageSize.regular, height: kUI.ImageSize.regular)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
         collectionView.backgroundColor = .bgColour
         return collectionView
     }()
-    
-    private enum LayoutConstant {
-        static let spacing: CGFloat = 10
-        static let itemHeight: CGFloat = 150
-        static let itemWidth: CGFloat = 150
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
