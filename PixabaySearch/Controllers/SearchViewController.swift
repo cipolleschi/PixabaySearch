@@ -26,6 +26,7 @@ class SearchViewController: UIViewController {
     
     private func setupNavbar() {
         navigationItem.title = "Pixabay images"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func updateNavbar() {
