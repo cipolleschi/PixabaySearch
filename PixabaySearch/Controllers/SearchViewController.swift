@@ -18,6 +18,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.dismissKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,10 +30,10 @@ class SearchViewController: UIViewController {
         updateNavbar()
     }
     
-//    private func setupNavbar() {
-//        navigationItem.title = "Pixabay images"
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//    }
+    //    private func setupNavbar() {
+    //        navigationItem.title = "Pixabay images"
+    //        navigationController?.navigationBar.prefersLargeTitles = true
+    //    }
     
     private func updateNavbar() {
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -50,8 +51,9 @@ class SearchViewController: UIViewController {
         }
         if searchString != "" {
             let searchResultsVC = SearchResultsViewController()
-            self.navigationController?.pushViewController(searchResultsVC, animated: true)
+            searchView.textView.endEditing(true)
             searchResultsVC.searchString = searchString
+            self.navigationController?.pushViewController(searchResultsVC, animated: true)
         }
     }
 }

@@ -7,20 +7,13 @@
 
 import UIKit
 
-class SearchResultsViewController: UIViewController, UICollectionViewDelegate {
+class SearchResultsViewController: UIViewController, UITableViewDelegate {
+    
+    private let myTableView = UITableView()
     
     var searchString = String()
     private var imageArray = [ImageInfo]()
-    private var tempImage = UIImageView()
     private var numberOfItems = 0
-    private let myCollectionView: UICollectionView = {
-        let viewLayout = UICollectionViewFlowLayout()
-        viewLayout.sectionInset = UIEdgeInsets(top: kUI.Spacing.medium, left: kUI.Spacing.medium, bottom: kUI.Spacing.medium, right: kUI.Spacing.medium)
-        viewLayout.itemSize = CGSize(width: kUI.ImageSize.regular, height: kUI.ImageSize.regular)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
-        collectionView.backgroundColor = .bgColour
-        return collectionView
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,19 +25,20 @@ class SearchResultsViewController: UIViewController, UICollectionViewDelegate {
     
     private func setupViews() {
         view.backgroundColor = .bgColour
-        myCollectionView.dataSource = self
-        myCollectionView.delegate = self
-        myCollectionView.register(ImageCollectionCell.self, forCellWithReuseIdentifier: ImageCollectionCell.identifier)
-        self.view.addSubview(myCollectionView)
+        myTableView.dataSource = self
+        myTableView.delegate = self
+        view.addSubview(myTableView)
+        myTableView.register(ImageCell.self, forCellReuseIdentifier: "searchCell")
+        myTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     
     private func setupLayouts() {
-        myCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        myTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            myCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            myCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            myCollectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            myCollectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+            myTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            myTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            myTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            myTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
         ])
     }
     
@@ -69,23 +63,24 @@ class SearchResultsViewController: UIViewController, UICollectionViewDelegate {
             case let .success(imageData):
                 self.imageArray = imageData
                 self.numberOfItems = self.imageArray.count
-                self.myCollectionView.reloadData()
+                self.myTableView.reloadData()
             }
         }
     }
 }
 
-extension SearchResultsViewController: UICollectionViewDataSource {
+extension SearchResultsViewController: UITableViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfItems
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionCell.identifier, for: indexPath) as! ImageCollectionCell
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: tempCell.frame.size.width, height: tempCell.frame.size.height))
-        tempCell.addSubview(imageView)
-        tempCell.backgroundColor = UIColor.bgColour
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! ImageCell
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.size.width, height: cell.frame.size.height))
+        cell.addSubview(imageView)
+        cell.backgroundColor = UIColor.bgColour
         imageView.contentMode = UIView.ContentMode.scaleAspectFit
         
         if let url = getImageURL(row: indexPath.row) {
@@ -98,6 +93,10 @@ extension SearchResultsViewController: UICollectionViewDataSource {
             }
             task.resume()
         }
-        return tempCell
+        return cell
+    }
+    
+    internal func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 300
     }
 }

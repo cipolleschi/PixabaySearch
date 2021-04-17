@@ -16,6 +16,5 @@ class PixabaySearchNavigationController: UINavigationController {
         navigationBar.backgroundColor = .bgColour
         navigationBar.isTranslucent = false
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.mainTextColour]
-        navigationBar.prefersLargeTitles = true
     }
 }

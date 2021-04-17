@@ -7,16 +7,11 @@
 
 import UIKit
 
-protocol ReusableView: AnyObject {
-    static var identifier: String { get }
-}
-
-final class ImageCollectionCell: UICollectionViewCell {
+final class ImageCell: UITableViewCell {
         
     private let bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .bgColour
-        bgView.layer.cornerRadius = 10
         bgView.translatesAutoresizingMaskIntoConstraints = false
         return bgView
     }()
@@ -24,7 +19,6 @@ final class ImageCollectionCell: UICollectionViewCell {
     let searchImage: UIImageView = {
         let image = UIImageView(frame: .zero)
         image.clipsToBounds = true
-        image.layer.cornerRadius = 10
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
         return image
@@ -33,8 +27,7 @@ final class ImageCollectionCell: UICollectionViewCell {
     private func setupView() {
         
         contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 10
-        contentView.backgroundColor = .clear
+        contentView.backgroundColor = .bgColour
         contentView.addSubview(bgView)
         bgView.addSubview(searchImage)
     }
@@ -50,24 +43,19 @@ final class ImageCollectionCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             searchImage.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
-            searchImage.widthAnchor.constraint(equalToConstant: 120),
+            searchImage.widthAnchor.constraint(equalToConstant: 200),
             searchImage.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
         ])
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         setupView()
         setupLayouts()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension ImageCollectionCell: ReusableView {
-    static var identifier: String {
-        return String(describing: self)
     }
 }
