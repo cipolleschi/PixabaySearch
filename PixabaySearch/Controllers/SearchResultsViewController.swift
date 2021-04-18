@@ -9,11 +9,9 @@ import UIKit
 
 class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
-    private let myTableView = UITableView()
-    
     var searchString = String()
-    private var imageArray = [ImageInfo]()
-    private var numberOfItems = 0
+    private let imagesTableView = UITableView()
+    private var imageArray: Array<ImageInfo>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,38 +19,43 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
         setupNavbar()
         setupViews()
         setupLayouts()
+        reloadTableView()
     }
     
     private func setupViews() {
         view.backgroundColor = .bgColour
-        myTableView.dataSource = self
-        myTableView.delegate = self
-        view.addSubview(myTableView)
-        myTableView.register(ImageCell.self, forCellReuseIdentifier: "searchCell")
-        myTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        imagesTableView.dataSource = self
+        imagesTableView.delegate = self
+        view.addSubview(imagesTableView)
+        imagesTableView.register(ImageCell.self, forCellReuseIdentifier: "searchCell")
+        imagesTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     
     private func setupLayouts() {
-        myTableView.translatesAutoresizingMaskIntoConstraints = false
+        imagesTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            myTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            myTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            myTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            myTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+            imagesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            imagesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            imagesTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            imagesTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
         ])
     }
     
     private func setupNavbar() {
         navigationItem.title = "Gallery"
-        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     private func getImageURL(row: Int) -> URL? {
-        self.imageArray[row].previewURL
+        if let array = imageArray {
+//            return array[row].previewURL
+            return array[row].webformatURL
+        }
+        // TODO: fix the missing image url
+        return URL(fileURLWithPath: "missingImageURL")
     }
     
     private func findImages(query: String) {
-        NetworkService.shared.fetchImages(query: query, amount: 20) { (result) in
+        NetworkService.shared.fetchImages(query: query, amount: 30) { (result) in
             switch result {
             case let .failure(error):
                 let alerController = UIAlertController(title: "Error", message: "Detailed error messages are not implemented", preferredStyle: .alert)
@@ -62,9 +65,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
                 print (error)
             case let .success(imageData):
                 self.imageArray = imageData
-                self.numberOfItems = self.imageArray.count
-                self.myTableView.reloadData()
             }
+        }
+    }
+    
+    fileprivate func reloadTableView() {
+        NetworkService.shared.dispatchGroup.notify(queue: .main) {
+            self.imagesTableView.reloadData()
         }
     }
 }
@@ -72,23 +79,20 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
 extension SearchResultsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return numberOfItems
+        return imageArray?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! ImageCell
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.size.width, height: cell.frame.size.height))
-        cell.addSubview(imageView)
         cell.backgroundColor = UIColor.bgColour
-        imageView.contentMode = UIView.ContentMode.scaleAspectFit
         
         if let url = getImageURL(row: indexPath.row) {
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data, error == nil else { return }
                 
                 DispatchQueue.main.async {
-                    imageView.image = UIImage(data: data)
+                    cell.searchImage.image = UIImage(data: data)
                 }
             }
             task.resume()
@@ -97,6 +101,6 @@ extension SearchResultsViewController: UITableViewDataSource {
     }
     
     internal func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return kUI.ImageSize.regular + kUI.Padding.defaultPadding
     }
 }

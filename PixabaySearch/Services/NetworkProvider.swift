@@ -11,7 +11,8 @@ import UIKit
 class NetworkService {
     
     static let shared = NetworkService()
-    
+    let dispatchGroup = DispatchGroup()
+
     private let apiKey = "13197033-03eec42c293d2323112b4cca6"
     
     private var baseUrlComponents: URLComponents {
@@ -23,6 +24,9 @@ class NetworkService {
     //MARK: - Fetch Images
     //TODO: value must be between 3-200, limit it? | maybe more parameters later?
     func fetchImages(query: String, amount: Int, completion: @escaping (Result<[ImageInfo], NetworkError>) -> Void ) {
+        
+        dispatchGroup.enter()
+
         var  urlComps = baseUrlComponents
         urlComps.queryItems? += [
             URLQueryItem(name: "q", value: query),
@@ -52,6 +56,7 @@ class NetworkService {
                 
                 DispatchQueue.main.async {
                     completion(.success(serverResponse.hits))
+                    self.dispatchGroup.leave()
                 }
             }
             catch let unsuccessfulQuery {

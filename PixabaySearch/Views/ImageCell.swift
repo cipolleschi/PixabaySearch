@@ -19,8 +19,8 @@ final class ImageCell: UITableViewCell {
     let searchImage: UIImageView = {
         let image = UIImageView(frame: .zero)
         image.clipsToBounds = true
+        image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFill
         return image
     }()
     
@@ -35,15 +35,17 @@ final class ImageCell: UITableViewCell {
     private func setupLayouts() {
 
         NSLayoutConstraint.activate([
-            bgView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            bgView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20),
-            bgView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            bgView.topAnchor.constraint(equalTo: self.topAnchor, constant: kUI.Padding.defaultPadding),
+            bgView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -kUI.Padding.defaultPadding),
+            bgView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: kUI.Padding.defaultPadding),
             bgView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
         NSLayoutConstraint.activate([
             searchImage.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
-            searchImage.widthAnchor.constraint(equalToConstant: 200),
+            searchImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: kUI.Padding.defaultPadding),
+            searchImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -kUI.Padding.defaultPadding),
+            searchImage.heightAnchor.constraint(equalToConstant: kUI.ImageSize.regular),
             searchImage.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
         ])
     }

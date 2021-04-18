@@ -13,7 +13,7 @@ class PixabaySearchNavigationController: UINavigationController {
         
         super.viewDidLoad()
         
-        navigationBar.backgroundColor = .bgColour
+        navigationBar.barStyle = .black
         navigationBar.isTranslucent = false
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.mainTextColour]
     }

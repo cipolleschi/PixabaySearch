@@ -29,12 +29,7 @@ class SearchViewController: UIViewController {
         super.viewWillDisappear(animated)
         updateNavbar()
     }
-    
-    //    private func setupNavbar() {
-    //        navigationItem.title = "Pixabay images"
-    //        navigationController?.navigationBar.prefersLargeTitles = true
-    //    }
-    
+        
     private func updateNavbar() {
         navigationController?.setNavigationBarHidden(false, animated: true)
         let backButton = UIBarButtonItem()
