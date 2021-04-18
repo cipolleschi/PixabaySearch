@@ -34,13 +34,14 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
         view.addSubview(imagesTableView)
         imagesTableView.register(ImageCell.self, forCellReuseIdentifier: "searchCell")
         imagesTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        imagesTableView.bounces = false
     }
     
     private func setupLayouts() {
         imagesTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imagesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            imagesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            imagesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -kUI.Padding.defaultPadding),
             imagesTableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             imagesTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
         ])
@@ -80,10 +81,22 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
         }
     }
     
-    fileprivate func reloadTableView() {
+    private func reloadTableView() {
         NetworkService.shared.dispatchGroup.notify(queue: .main) {
             self.imagesTableView.reloadData()
         }
+    }
+    
+    private func calculateCellHeight(indexPathRow: Int) -> CGFloat {
+        
+        guard let images = imageArray else { return kUI.ImageSize.regular + kUI.Padding.defaultPadding }
+        
+        let imageWidth = Double(images[indexPathRow].webformatWidth)
+        let imageHeight = Double(images[indexPathRow].webformatHeight)
+        let contentWidth = Double(UIScreen.main.bounds.width - (kUI.Padding.defaultPadding * 2))
+        let cellHeight = (imageHeight / (imageWidth / contentWidth))
+
+        return CGFloat(cellHeight)
     }
 }
 
@@ -111,7 +124,7 @@ extension SearchResultsViewController: UITableViewDataSource {
         return cell
     }
     
-    internal func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return kUI.ImageSize.regular + kUI.Padding.defaultPadding
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return calculateCellHeight(indexPathRow: indexPath.row)
     }
 }

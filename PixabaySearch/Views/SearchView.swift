@@ -129,7 +129,6 @@ class SearchView: UIView {
     
     @objc func buttonAction(_ sender:UIButton!)
     {
-        print("SearchView button tapped")
         self.searchTappedHandler?(self)
     }
     

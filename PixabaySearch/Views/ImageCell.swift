@@ -38,14 +38,13 @@ final class ImageCell: UITableViewCell {
             bgView.topAnchor.constraint(equalTo: self.topAnchor, constant: kUI.Padding.defaultPadding),
             bgView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -kUI.Padding.defaultPadding),
             bgView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: kUI.Padding.defaultPadding),
-            bgView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            bgView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: kUI.Padding.defaultPadding)
         ])
         
         NSLayoutConstraint.activate([
             searchImage.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
             searchImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: kUI.Padding.defaultPadding),
             searchImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -kUI.Padding.defaultPadding),
-            searchImage.heightAnchor.constraint(equalToConstant: kUI.ImageSize.regular),
             searchImage.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
         ])
     }
