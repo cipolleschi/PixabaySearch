@@ -25,6 +25,7 @@
 		C946F72F262B3DA50085C5DC /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F72E262B3DA50085C5DC /* TextFieldWithPadding.swift */; };
 		C946F734262B40900085C5DC /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F733262B40900085C5DC /* UIConstants.swift */; };
 		C946F739262B905C0085C5DC /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F738262B905C0085C5DC /* UIViewController.swift */; };
+		C946F744262C8D730085C5DC /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C946F743262C8D730085C5DC /* CacheManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		C946F72E262B3DA50085C5DC /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		C946F733262B40900085C5DC /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		C946F738262B905C0085C5DC /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		C946F743262C8D730085C5DC /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				C946F6D5262604620085C5DC /* NetworkProvider.swift */,
+				C946F743262C8D730085C5DC /* CacheManager.swift */,
 				C946F6DF26263A220085C5DC /* NetworkError.swift */,
 			);
 			path = Services;
@@ -257,6 +260,7 @@
 				C946F6B82625E3080085C5DC /* SceneDelegate.swift in Sources */,
 				C946F6F426276A860085C5DC /* Colours.swift in Sources */,
 				C946F6D6262604620085C5DC /* NetworkProvider.swift in Sources */,
+				C946F744262C8D730085C5DC /* CacheManager.swift in Sources */,
 				C946F6F826277C820085C5DC /* SearchResultsViewController.swift in Sources */,
 				C946F6FC26278C080085C5DC /* SearchView.swift in Sources */,
 				C946F739262B905C0085C5DC /* UIViewController.swift in Sources */,
@@ -416,7 +420,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.andrasPal.PixabaySearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -435,7 +439,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.andrasPal.PixabaySearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -15,11 +15,16 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        findImages(query: searchString)
+        findImageInfo(query: searchString)
         setupNavbar()
         setupViews()
         setupLayouts()
         reloadTableView()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        CacheManager.shared.searchCacheArray.removeAll()
     }
     
     private func setupViews() {
@@ -47,24 +52,30 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
     private func getImageURL(row: Int) -> URL? {
         if let array = imageArray {
-//            return array[row].previewURL
+            //            return array[row].previewURL
             return array[row].webformatURL
         }
         // TODO: fix the missing image url
         return URL(fileURLWithPath: "missingImageURL")
     }
     
-    private func findImages(query: String) {
-        NetworkService.shared.fetchImages(query: query, amount: 30) { (result) in
-            switch result {
-            case let .failure(error):
-                let alerController = UIAlertController(title: "Error", message: "Detailed error messages are not implemented", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .destructive) { _ in }
-                alerController.addAction(okAction)
-                self.present(alerController, animated: true, completion: nil)
-                print (error)
-            case let .success(imageData):
-                self.imageArray = imageData
+    private func findImageInfo(query: String) {
+        
+        if CacheManager.shared.isSearchStringSaved(query: searchString) == true {
+            imageArray = CacheManager.shared.returnItem(query: searchString)
+        } else {
+            NetworkService.shared.fetchImages(query: query, amount: 25) { (result) in
+                switch result {
+                case let .failure(error):
+                    let alerController = UIAlertController(title: "Error", message: "Detailed error messages are not implemented", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .destructive) { _ in }
+                    alerController.addAction(okAction)
+                    self.present(alerController, animated: true, completion: nil)
+                    print (error)
+                case let .success(imageData):
+                    self.imageArray = imageData
+                    CacheManager.shared.updateSearchCache(searchString: self.searchString, searchResults: imageData)
+                }
             }
         }
     }
