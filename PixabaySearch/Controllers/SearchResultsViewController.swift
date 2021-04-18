@@ -11,7 +11,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
     var searchString = String()
     private let imagesTableView = UITableView()
-    private var imageArray: Array<ImageInfo>?
+    private var imageInfoArray: Array<ImageInfo>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +52,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     }
     
     private func getImageURL(row: Int) -> URL? {
-        if let array = imageArray {
+        if let array = imageInfoArray {
             //            return array[row].previewURL
             return array[row].webformatURL
         }
@@ -62,8 +62,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
     private func findImageInfo(query: String) {
         
-        if CacheManager.shared.isSearchStringSaved(query: searchString) == true {
-            imageArray = CacheManager.shared.returnItem(query: searchString)
+        if CacheManager.shared.isImageInfoSaved(query: searchString) == true {
+            imageInfoArray = CacheManager.shared.returnImageInfo(query: searchString)
         } else {
             NetworkService.shared.fetchImages(query: query, amount: 25) { (result) in
                 switch result {
@@ -74,7 +74,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
                     self.present(alerController, animated: true, completion: nil)
                     print (error)
                 case let .success(imageData):
-                    self.imageArray = imageData
+                    self.imageInfoArray = imageData
                     CacheManager.shared.updateSearchCache(searchString: self.searchString, searchResults: imageData)
                 }
             }
@@ -89,7 +89,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
     private func calculateCellHeight(indexPathRow: Int) -> CGFloat {
         
-        guard let images = imageArray else { return kUI.ImageSize.regular + kUI.Padding.defaultPadding }
+        guard let images = imageInfoArray else { return kUI.ImageSize.regular + kUI.Padding.defaultPadding }
         
         let imageWidth = Double(images[indexPathRow].webformatWidth)
         let imageHeight = Double(images[indexPathRow].webformatHeight)
@@ -103,7 +103,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
 extension SearchResultsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imageArray?.count ?? 0
+        return imageInfoArray?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

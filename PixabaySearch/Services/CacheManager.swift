@@ -23,7 +23,7 @@ class CacheManager {
         self.searchCacheArray.append(searchCache)
     }
     
-    func isSearchStringSaved(query: String) -> Bool {
+    func isImageInfoSaved(query: String) -> Bool {
         if searchCacheArray.count > 0 {
             for item in 0..<searchCacheArray.count {
                 let item = searchCacheArray[item]
@@ -35,7 +35,7 @@ class CacheManager {
         return false
     }
     
-    func returnItem(query: String) -> Array<ImageInfo> {
+    func returnImageInfo(query: String) -> Array<ImageInfo> {
         
         var imageInfo: Array<ImageInfo> = []
         
