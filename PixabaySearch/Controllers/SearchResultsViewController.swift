@@ -24,7 +24,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        CacheManager.shared.searchCacheArray.removeAll()
+        CacheManager.shared.searchCache.removeAll()
+        CacheManager.shared.imageCache.removeAll()
     }
     
     private func setupViews() {
@@ -53,11 +54,18 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
     private func getImageURL(row: Int) -> URL? {
         if let array = imageInfoArray {
-            //            return array[row].previewURL
-            return array[row].webformatURL
+            return array[row].largeImageURL
         }
         // TODO: fix the missing image url
         return URL(fileURLWithPath: "missingImageURL")
+    }
+    
+    private func getImageId(row: Int) -> Int {
+        if let array = imageInfoArray {
+            return array[row].id
+        }
+        // TODO: can this even happen? basically it means there is an error
+        return 1
     }
     
     private func findImageInfo(query: String) {
@@ -95,7 +103,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
         let imageHeight = Double(images[indexPathRow].webformatHeight)
         let contentWidth = Double(UIScreen.main.bounds.width - (kUI.Padding.defaultPadding * 2))
         let cellHeight = (imageHeight / (imageWidth / contentWidth))
-
+        
         return CGFloat(cellHeight)
     }
 }
@@ -112,14 +120,22 @@ extension SearchResultsViewController: UITableViewDataSource {
         cell.backgroundColor = UIColor.bgColour
         
         if let url = getImageURL(row: indexPath.row) {
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                guard let data = data, error == nil else { return }
+            
+            if CacheManager.shared.isImageSaved(imageId: self.getImageId(row: indexPath.row)) == true {
+                cell.searchImage.image = CacheManager.shared.returnImage(imageId: self.getImageId(row: indexPath.row))
+            } else {
                 
-                DispatchQueue.main.async {
-                    cell.searchImage.image = UIImage(data: data)
+                let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                    guard let data = data, error == nil else { return }
+                    
+                    DispatchQueue.main.async {
+                        cell.searchImage.image = UIImage(data: data)
+                        CacheManager.shared.updateImageCache(imageId: self.getImageId(row: indexPath.row), image: cell.searchImage.image!)
+                        //                        print("imageCache content: \(CacheManager.shared.imageCache)")
+                    }
                 }
+                task.resume()
             }
-            task.resume()
         }
         return cell
     }

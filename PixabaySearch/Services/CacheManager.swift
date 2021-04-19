@@ -11,22 +11,23 @@ class CacheManager {
     
     static let shared = CacheManager()
     
-    var searchCacheArray: Array< Dictionary<String, Array<ImageInfo>> > = []
+    var searchCache: Array< Dictionary<String, Array<ImageInfo>> > = []
+    var imageCache: Array< Dictionary<Int, UIImage> > = []
     
     func updateSearchCache(searchString: String, searchResults: Array<ImageInfo>) {
         
         let searchCache = [searchString : searchResults]
         
-        if self.searchCacheArray.count == 10 {
-            self.searchCacheArray.remove(at: 0)
+        if self.searchCache.count == 10 {
+            self.searchCache.remove(at: 0)
         }
-        self.searchCacheArray.append(searchCache)
+        self.searchCache.append(searchCache)
     }
     
     func isImageInfoSaved(query: String) -> Bool {
-        if searchCacheArray.count > 0 {
-            for item in 0..<searchCacheArray.count {
-                let item = searchCacheArray[item]
+        if searchCache.count > 0 {
+            for item in 0..<searchCache.count {
+                let item = searchCache[item]
                 if item.keys.contains(query) {
                     return true
                 }
@@ -39,13 +40,48 @@ class CacheManager {
         
         var imageInfo: Array<ImageInfo> = []
         
-        for idx in 0..<searchCacheArray.count {
-            let item = searchCacheArray[idx]
+        for idx in 0..<searchCache.count {
+            let item = searchCache[idx]
             if item.keys.contains(query) {
                 imageInfo = item[query]!
             }
         }
         return imageInfo
+    }
+    
+    func updateImageCache(imageId: Int, image: UIImage) {
+        
+        let imageCache = [imageId : image]
+        
+        if self.imageCache.count == 50 {
+            self.imageCache.remove(at: 0)
+        }
+        self.imageCache.append(imageCache)
+    }
+    
+    func isImageSaved(imageId: Int) -> Bool {
+        if imageCache.count > 0 {
+            for item in 0..<imageCache.count {
+                let item = imageCache[item]
+                if item.keys.contains(imageId) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func returnImage(imageId: Int) -> UIImage {
+        
+        var image = UIImage()
+        
+        for idx in 0..<imageCache.count {
+            let item = imageCache[idx]
+            if item.keys.contains(imageId) {
+                image = item[imageId]!
+            }
+        }
+        return image
     }
     
     private init() {}
