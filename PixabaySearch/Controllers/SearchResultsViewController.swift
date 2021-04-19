@@ -69,11 +69,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     }
     
     private func findImageInfo(query: String) {
-        
         if CacheManager.shared.isImageInfoSaved(query: searchString) == true {
             imageInfoArray = CacheManager.shared.returnImageInfo(query: searchString)
         } else {
-            NetworkService.shared.fetchImages(query: query, amount: 25) { (result) in
+            NetworkService.shared.fetchImageData(query: query, amount: 25) { (result) in
                 switch result {
                 case let .failure(error):
                     let alerController = UIAlertController(title: "Error", message: "Detailed error messages are not implemented", preferredStyle: .alert)
@@ -96,7 +95,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     }
     
     private func calculateCellHeight(indexPathRow: Int) -> CGFloat {
-        
         guard let images = imageInfoArray else { return kUI.ImageSize.regular + kUI.Padding.defaultPadding }
         
         let imageWidth = Double(images[indexPathRow].webformatWidth)
@@ -115,9 +113,9 @@ extension SearchResultsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! ImageCell
         cell.backgroundColor = UIColor.bgColour
+        cell.selectionStyle = .none
         
         if let url = getImageURL(row: indexPath.row) {
             

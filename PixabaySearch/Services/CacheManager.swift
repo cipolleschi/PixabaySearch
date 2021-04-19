@@ -43,7 +43,7 @@ class CacheManager {
         for idx in 0..<searchCache.count {
             let item = searchCache[idx]
             if item.keys.contains(query) {
-                imageInfo = item[query]!
+                imageInfo = item[query] ?? []
             }
         }
         return imageInfo
@@ -78,7 +78,7 @@ class CacheManager {
         for idx in 0..<imageCache.count {
             let item = imageCache[idx]
             if item.keys.contains(imageId) {
-                image = item[imageId]!
+                image = item[imageId] ?? UIImage()
             }
         }
         return image

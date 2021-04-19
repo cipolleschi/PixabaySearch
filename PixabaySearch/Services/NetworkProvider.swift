@@ -21,9 +21,8 @@ class NetworkService {
         return urlComponents
     }
     
-    //MARK: - Fetch Images
     //TODO: value must be between 3-200, limit it? | maybe more parameters later?
-    func fetchImages(query: String, amount: Int, completion: @escaping (Result<[ImageInfo], NetworkError>) -> Void ) {
+    func fetchImageData(query: String, amount: Int, completion: @escaping (Result<[ImageInfo], NetworkError>) -> Void ) {
         
         dispatchGroup.enter()
 

@@ -60,7 +60,6 @@ class SearchView: UIView {
     }()
     
     let searchButton: UIButton = {
-        
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .buttonColour

@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class ImageCell: UITableViewCell {
-        
+class ImageCell: UITableViewCell {
+    
     private let bgView: UIView = {
         let bgView = UIView()
         bgView.backgroundColor = .bgColour
@@ -51,7 +51,7 @@ final class ImageCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        
         setupView()
         setupLayouts()
     }

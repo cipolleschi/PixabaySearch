@@ -13,7 +13,7 @@ class SearchViewController: UIViewController {
     
     override func loadView() {
         view = searchView
-        searchView.searchTappedHandler = handleButtonTap(_:)
+        searchView.searchTappedHandler = handleSearchButtonTap(_:)
     }
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class SearchViewController: UIViewController {
         navigationItem.title = ""
     }
     
-    private func handleButtonTap(_ customView: SearchView) {
+    private func handleSearchButtonTap(_ customView: SearchView) {
         guard let searchString = searchView.textView.text else {
             print("error with the searchString")
             return
