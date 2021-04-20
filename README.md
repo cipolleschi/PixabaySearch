@@ -4,7 +4,7 @@ A small iOS application in Swift that shows a gallery of images from a search in
 
 ## How to run the app
 
-There are no third party dependencies, just launch the app in XCode. The app supports iPhones and both landscape and portrait mode. There is no iPad support yet, however you should still be able to run it on an iPad in simulator mode.
+There are no third party dependencies, just launch the app in Xcode. The app supports iPhones and both landscape and portrait mode. There is no iPad support yet, however you should still be able to run it on an iPad in simulator mode.
 
 ## My main goals with the project
 
