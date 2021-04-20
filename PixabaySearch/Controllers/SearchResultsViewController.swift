@@ -75,14 +75,15 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
             NetworkService.shared.fetchImageData(query: query, amount: 25) { (result) in
                 switch result {
                 case let .failure(error):
-                    let alerController = UIAlertController(title: "Error", message: "Detailed error messages are not implemented", preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "OK", style: .destructive) { _ in }
-                    alerController.addAction(okAction)
-                    self.present(alerController, animated: true, completion: nil)
+                    self.presentAlert(title: "Error", message: "Detailed error messages are not implemented")
                     print (error)
                 case let .success(imageData):
                     self.imageInfoArray = imageData
                     CacheManager.shared.updateSearchCache(searchString: self.searchString, searchResults: imageData)
+                    
+                    if self.imageInfoArray?.count == 0 {
+                        self.presentAlert(title: "No results", message: "Try to use different keywords")
+                    }
                 }
             }
         }
@@ -96,13 +97,18 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     
     private func calculateCellHeight(indexPathRow: Int) -> CGFloat {
         guard let images = imageInfoArray else { return kUI.ImageSize.regular + kUI.Padding.defaultPadding }
-        
         let imageWidth = Double(images[indexPathRow].webformatWidth)
         let imageHeight = Double(images[indexPathRow].webformatHeight)
         let contentWidth = Double(UIScreen.main.bounds.width - (kUI.Padding.defaultPadding * 2))
         let cellHeight = (imageHeight / (imageWidth / contentWidth))
-        
         return CGFloat(cellHeight)
+    }
+    
+    private func presentAlert(title: String, message: String) {
+        let alerController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .destructive) { _ in }
+        alerController.addAction(okAction)
+        self.present(alerController, animated: true, completion: nil)
     }
 }
 

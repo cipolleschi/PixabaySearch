@@ -64,7 +64,7 @@ class SearchView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .buttonColour
         button.layer.cornerRadius = kUI.Size.cornerRadius
-        button.setTitle("Search Now", for: UIControl.State.normal)
+        button.setTitle("Search now", for: UIControl.State.normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         return button
     }()

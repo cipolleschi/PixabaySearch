@@ -45,7 +45,6 @@ class ImageCell: UITableViewCell {
             searchImage.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
             searchImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: kUI.Padding.defaultPadding),
             searchImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -kUI.Padding.defaultPadding),
-            searchImage.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
         ])
     }
     
