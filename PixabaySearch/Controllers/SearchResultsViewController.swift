@@ -12,6 +12,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     var searchString = String()
     private let imagesTableView = UITableView()
     private var imageInfoArray: Array<ImageInfo>?
+
+    // TODO: add the property to store the instance of the networkService
+
+    // TODO: add the init here
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +76,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
         if CacheManager.shared.isImageInfoSaved(query: searchString) == true {
             imageInfoArray = CacheManager.shared.returnImageInfo(query: searchString)
         } else {
+            // TODO: replace the call of the shared instance
             NetworkService.shared.fetchImageData(query: query, amount: 25) { (result) in
                 switch result {
                 case let .failure(error):
@@ -90,6 +95,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate {
     }
     
     private func reloadTableView() {
+        // [Riccardo] Directly accessing the `dispatchGroup` is not a good practice.
+        // The way in which the downloads are orchestrated is an implementation detail of the network service.
+        // could you think about a way to hide this from the VC.
         NetworkService.shared.dispatchGroup.notify(queue: .main) {
             self.imagesTableView.reloadData()
         }
